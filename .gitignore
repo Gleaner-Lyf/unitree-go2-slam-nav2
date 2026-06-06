@@ -1,0 +1,36 @@
+# ROS 2 build outputs
+build/
+install/
+log/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+.pytest_cache/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Bags and large data
+*.bag
+*.db3
+*.mcap
+
+# Local maps and generated data
+go2_maps/
+maps/generated/
+maps/local/
+
+# Temporary files
+*.diff
+*.patch
+*.log
+*.tmp
