@@ -2,7 +2,39 @@
 
 本项目面向 Ubuntu 22.04 + ROS 2 Humble 用户，提供 Unitree Go2 EDU 与 Unitree L1 LiDAR 的 2D 建图、地图保存、Nav2 自主导航、键盘控制和前向安全避障示例。
 
-本仓库只包含 Go2 上层 ROS 2 功能包，不包含 Unitree 官方通信 underlay。使用前必须先准备并 source Unitree ROS 2 underlay。
+## 项目目的与最终效果
+
+项目目的：
+
+本项目旨在基于 Unitree Go2 EDU 和 Unitree L1 LiDAR，搭建一套可复现的 ROS 2 Humble 2D SLAM 与 Nav2 自主导航流程。项目重点不是重新设计底层机器人控制，而是把 Go2 的通信、雷达点云处理、2D 建图、地图保存、AMCL 定位、Nav2 导航、速度桥接和前向安全过滤整合成一个完整工作空间，方便学习、复现和二次开发。
+
+最终效果：
+
+按照本文档完成配置后，理论上可以实现：
+
+- 连接 Unitree Go2 EDU 真机并读取 L1 LiDAR、里程计和机器人状态；
+- 将 L1 3D 点云处理为 2D LaserScan；
+- 使用 slam_toolbox 完成室内 2D 建图；
+- 使用 nav2_map_server 保存地图；
+- 使用 map_server + AMCL + Nav2 在已保存地图上进行自主导航；
+- 在 RViz 中通过 2D Pose Estimate 初始化定位，通过 2D Goal Pose 发送目标点；
+- 通过 `go2_twist_bridge` 将 Nav2 输出速度转换为 Unitree `/api/sport/request`；
+- 通过 `go2_safety_filter` 在前方障碍物过近时进行减速或停止；
+- 使用自定义键盘控制节点进行基础运动测试。
+
+适用范围：
+
+- 适合学习 Unitree Go2 ROS 2 开发、2D SLAM、Nav2、自主导航流程的用户；
+- 适合在室内平整环境下做教学、实验和二次开发；
+- 测试硬件为 Unitree Go2 EDU + Unitree L1 LiDAR + Ubuntu 22.04 + ROS 2 Humble。
+
+当前限制：
+
+- 本项目不是商用品质导航系统；
+- 不包含 Unitree 官方通信 underlay，需要用户单独安装、准备并 source；
+- 导航效果受地图质量、地面环境、网络配置、AMCL 初始化、Nav2 参数影响；
+- 当前主要验证 2D 室内建图和短距离自主导航；
+- 复杂动态避障、长距离稳定导航、室外导航、3D SLAM 尚未作为主要目标。
 
 外部参考教程：
 
